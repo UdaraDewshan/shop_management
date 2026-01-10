@@ -33,3 +33,23 @@ body {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons */
+.btn-custom-add {
+    background: linear-gradient(45deg, #ff00cc, #333399);
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: filter 0.3s;
+}
+
+.btn-custom-add:hover {
+    filter: brightness(1.2);
+    color: white;
+}
+
