@@ -5,12 +5,12 @@ body {
   
     background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     min-height: 100vh;
-    color: #fff;
+    color: #fffcfc;
     overflow-x: hidden;
 }
 
 .glass-nav {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(169, 154, 154, 0.05);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -22,7 +22,7 @@ body {
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(193, 180, 180, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
 }
@@ -36,13 +36,14 @@ body {
 .card-img-top {
     height: 200px;
     object-fit: cover;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(141, 91, 131, 0.1);
 }
 
+
 .btn-custom-add {
-    background: linear-gradient(45deg, #ff00cc, #333399);
+    background: linear-gradient(45deg, #ff00cc, #a9a9cc);
     border: none;
-    color: white;
+   
     font-weight: 600;
     transition: filter 0.3s;
 }
@@ -53,22 +54,21 @@ body {
 }
 
 .btn-action-edit {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(216, 214, 214, 0.1);
     color: #4facfe;
     border: 1px solid rgba(79, 172, 254, 0.3);
 }
 
 .btn-action-delete {
-    background: rgba(255, 255, 255, 0.1);
-    color: #ff5f6d;
-    border: 1px solid rgba(255, 95, 109, 0.3);
+    background: rgba(233, 230, 230, 0.1);
+    color: #5f1a20;
+    border: 1px solid rgba(128, 122, 122, 0.3);
 }
 
-.btn-action-edit:hover { background: #4facfe; color: white; }
+.btn-action-edit:hover { background: #4facfe; color: rgb(255, 255, 255); }
 .btn-action-delete:hover { background: #ff5f6d; color: white; }
 
-
-glass-modal {
+.glass-modal {
     background: linear-gradient(135deg, #1e1e2f, #2a2a40);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -76,18 +76,26 @@ glass-modal {
 .glass-input {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .glass-input:focus {
     background: rgba(255, 255, 255, 0.1);
-    color: white;
+    color: rgb(255, 255, 255);
     box-shadow: none;
     border-color: #ff00cc;
 }
 
 .fade-in-up {
     animation: fadeInUp 0.8s ease-out;
+}
+
+.submit {
+    background: linear-gradient(45deg, #ff00cc, #a9a9cc);
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: filter 0.3s;
 }
 
 @keyframes fadeInUp {

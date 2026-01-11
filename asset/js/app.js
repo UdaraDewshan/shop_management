@@ -48,18 +48,53 @@ function showProductInUI(product) {
 
 
 
+document.getElementById('productForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); 
 
+    const id = document.getElementById('productId').value;
+    const productData = {
+        title: document.getElementById('title').value,
+        price: document.getElementById('price').value,
+        category: document.getElementById('category').value
+    };
 
-window.deleteProduct = async (id) => {
-    if (confirm("Are you sure?")) {
-        try {
-            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-        
-            document.getElementById(`product-${id}`).remove();
-            alert("Deleted successfully!");
+    try {
+        if (id) {
+ 
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productData)
+            });
+            const updatedProduct = await response.json();
+
+   
+            updateCardUI(id, updatedProduct);
+            alert("Product updated successfully!");
+
+        } else {
+   
+            const response = await fetch(`${API_URL}/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productData)
+            });
+            const newProduct = await response.json();
             
-        } catch (error) {
-            alert("Delete not do");
+
+            newProduct.thumbnail = 'https://via.placeholder.com/300';
+            
+            showProductInUI(newProduct); 
+            alert("New product added!");
         }
+        
+        productModal.hide(); 
+        document.getElementById('productForm').reset(); 
+
+    } catch (error) {
+        console.error("Error:", error);
     }
-};
+});
+
+
+
