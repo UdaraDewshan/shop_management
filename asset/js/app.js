@@ -46,19 +46,21 @@ function showProductInUI(product) {
     productGrid.prepend(col); 
 }
 
+
 document.getElementById('productForm').addEventListener('submit', async (e) => {
     e.preventDefault(); 
 
     const id = document.getElementById('productId').value;
+  
     const productData = {
         title: document.getElementById('title').value,
         price: document.getElementById('price').value,
-        category: document.getElementById('category').value
+        category: document.getElementById('category').value,
+        thumbnail: document.getElementById('thumbnail').value 
     };
 
     try {
         if (id) {
- 
             const response = await fetch(`${API_URL}/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -66,12 +68,12 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
             });
             const updatedProduct = await response.json();
 
-   
+            updatedProduct.thumbnail = productData.thumbnail;
+
             updateCardUI(id, updatedProduct);
             alert("Product updated successfully!");
 
         } else {
-   
             const response = await fetch(`${API_URL}/add`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -79,8 +81,7 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
             });
             const newProduct = await response.json();
             
-
-            newProduct.thumbnail = 'https://via.placeholder.com/300';
+            newProduct.thumbnail = productData.thumbnail || 'https://via.placeholder.com/300';
             
             showProductInUI(newProduct); 
             alert("New product added!");
@@ -139,5 +140,6 @@ function updateCardUI(id, data) {
         card.querySelector('.card-title').innerText = data.title;
         card.querySelector('.card-text').innerText = `$${data.price}`;
         card.querySelector('.badge').innerText = data.category;
+        card.querySelector('.card-img-top').src = data.thumbnail;
     }
 }
