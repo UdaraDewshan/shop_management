@@ -15,7 +15,12 @@ async function loadProducts() {
         
     } catch (error) {
         alert("Data load not");
-    } 
+
+    } finally {
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 2000);
+    }
 }
 
 function showProductInUI(product) {
@@ -41,3 +46,20 @@ function showProductInUI(product) {
     productGrid.prepend(col); 
 }
 
+
+
+
+
+window.deleteProduct = async (id) => {
+    if (confirm("Are you sure?")) {
+        try {
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        
+            document.getElementById(`product-${id}`).remove();
+            alert("Deleted successfully!");
+            
+        } catch (error) {
+            alert("Delete not do");
+        }
+    }
+};
