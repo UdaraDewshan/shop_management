@@ -46,6 +46,54 @@ function showProductInUI(product) {
     productGrid.prepend(col); 
 }
 
+document.getElementById('productForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); 
+
+    const id = document.getElementById('productId').value;
+    const productData = {
+        title: document.getElementById('title').value,
+        price: document.getElementById('price').value,
+        category: document.getElementById('category').value
+    };
+
+    try {
+        if (id) {
+ 
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productData)
+            });
+            const updatedProduct = await response.json();
+
+   
+            updateCardUI(id, updatedProduct);
+            alert("Product updated successfully!");
+
+        } else {
+   
+            const response = await fetch(`${API_URL}/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productData)
+            });
+            const newProduct = await response.json();
+            
+
+            newProduct.thumbnail = 'https://via.placeholder.com/300';
+            
+            showProductInUI(newProduct); 
+            alert("New product added!");
+        }
+        
+        productModal.hide(); 
+        document.getElementById('productForm').reset(); 
+
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
 
 window.editProduct = async (id) => {
 
@@ -76,3 +124,20 @@ window.deleteProduct = async (id) => {
     }
 };
 
+
+window.openAddModal = () => {
+    document.getElementById('productForm').reset();
+    document.getElementById('productId').value = ''; 
+    document.getElementById('modalTitle').innerText = 'Add New Product';
+    productModal.show();
+};
+
+
+function updateCardUI(id, data) {
+    const card = document.getElementById(`product-${id}`);
+    if (card) {
+        card.querySelector('.card-title').innerText = data.title;
+        card.querySelector('.card-text').innerText = `$${data.price}`;
+        card.querySelector('.badge').innerText = data.category;
+    }
+}
