@@ -47,54 +47,32 @@ function showProductInUI(product) {
 }
 
 
+window.editProduct = async (id) => {
 
-document.getElementById('productForm').addEventListener('submit', async (e) => {
-    e.preventDefault(); 
+    const response = await fetch(`${API_URL}/${id}`);
+    const product = await response.json();
 
-    const id = document.getElementById('productId').value;
-    const productData = {
-        title: document.getElementById('title').value,
-        price: document.getElementById('price').value,
-        category: document.getElementById('category').value
-    };
+    document.getElementById('productId').value = product.id;
+    document.getElementById('title').value = product.title;
+    document.getElementById('price').value = product.price;
+    document.getElementById('category').value = product.category;
 
-    try {
-        if (id) {
- 
-            const response = await fetch(`${API_URL}/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(productData)
-            });
-            const updatedProduct = await response.json();
+    document.getElementById('modalTitle').innerText = 'Edit Product';
+    productModal.show();
+};
 
-   
-            updateCardUI(id, updatedProduct);
-            alert("Product updated successfully!");
 
-        } else {
-   
-            const response = await fetch(`${API_URL}/add`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(productData)
-            });
-            const newProduct = await response.json();
-            
-
-            newProduct.thumbnail = 'https://via.placeholder.com/300';
-            
-            showProductInUI(newProduct); 
-            alert("New product added!");
-        }
+window.deleteProduct = async (id) => {
+    if (confirm("Are you sure?")) {
+        try {
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
         
-        productModal.hide(); 
-        document.getElementById('productForm').reset(); 
-
-    } catch (error) {
-        console.error("Error:", error);
+            document.getElementById(`product-${id}`).remove();
+            alert("Deleted successfully!");
+            
+        } catch (error) {
+            alert("Delete not do");
+        }
     }
-});
-
-
+};
 
